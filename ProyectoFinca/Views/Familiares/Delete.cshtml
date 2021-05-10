@@ -1,0 +1,49 @@
+﻿@model ProyectoFinca.Familiares
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Eliminar Persona</h2>
+
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Finca.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Finca.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Parentesco.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Parentesco.Descripcion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" style="background-color:coral" /> 
+            @Html.ActionLink("Regresar", "Index")
+        </div>
+    }
+</div>

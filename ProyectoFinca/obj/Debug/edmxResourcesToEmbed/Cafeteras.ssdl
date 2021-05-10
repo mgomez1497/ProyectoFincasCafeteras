@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FincasCafeterasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Administrador">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="Nombre" Type="char" MaxLength="40" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Familiares">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="Nombre" Type="char" MaxLength="40" Nullable="false" />
+    <Property Name="Id_parentesco" Type="numeric" Precision="10" Scale="0" />
+    <Property Name="Id_finca" Type="numeric" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="Finca">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Vereda" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Municipio" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Departamento" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="IdAdmin" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Parentesco">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="Descripcion" Type="char" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Rol">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="Descripcion" Type="char" MaxLength="40" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Trabajador">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="Nombre" Type="char" MaxLength="40" Nullable="false" />
+    <Property Name="id_rol" Type="numeric" Precision="10" Scale="0" />
+    <Property Name="id_finca" Type="numeric" Precision="18" Scale="0" />
+  </EntityType>
+  <Association Name="FK__Familiare__Id_fi__32E0915F">
+    <End Role="Finca" Type="Self.Finca" Multiplicity="0..1" />
+    <End Role="Familiares" Type="Self.Familiares" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Finca">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Familiares">
+        <PropertyRef Name="Id_finca" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Familiare__Id_pa__33D4B598">
+    <End Role="Parentesco" Type="Self.Parentesco" Multiplicity="0..1" />
+    <End Role="Familiares" Type="Self.Familiares" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parentesco">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Familiares">
+        <PropertyRef Name="Id_parentesco" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Finca__IdAdmin__286302EC">
+    <End Role="Administrador" Type="Self.Administrador" Multiplicity="1" />
+    <End Role="Finca" Type="Self.Finca" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Administrador">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Finca">
+        <PropertyRef Name="IdAdmin" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trabajado__id_fi__440B1D61">
+    <End Role="Finca" Type="Self.Finca" Multiplicity="0..1" />
+    <End Role="Trabajador" Type="Self.Trabajador" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Finca">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Trabajador">
+        <PropertyRef Name="id_finca" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Trabajado__id_ro__4316F928">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+    <End Role="Trabajador" Type="Self.Trabajador" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Trabajador">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FincasCafeterasModelStoreContainer">
+    <EntitySet Name="Administrador" EntityType="Self.Administrador" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Familiares" EntityType="Self.Familiares" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Finca" EntityType="Self.Finca" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Parentesco" EntityType="Self.Parentesco" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Trabajador" EntityType="Self.Trabajador" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Familiare__Id_fi__32E0915F" Association="Self.FK__Familiare__Id_fi__32E0915F">
+      <End Role="Finca" EntitySet="Finca" />
+      <End Role="Familiares" EntitySet="Familiares" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Familiare__Id_pa__33D4B598" Association="Self.FK__Familiare__Id_pa__33D4B598">
+      <End Role="Parentesco" EntitySet="Parentesco" />
+      <End Role="Familiares" EntitySet="Familiares" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Finca__IdAdmin__286302EC" Association="Self.FK__Finca__IdAdmin__286302EC">
+      <End Role="Administrador" EntitySet="Administrador" />
+      <End Role="Finca" EntitySet="Finca" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trabajado__id_fi__440B1D61" Association="Self.FK__Trabajado__id_fi__440B1D61">
+      <End Role="Finca" EntitySet="Finca" />
+      <End Role="Trabajador" EntitySet="Trabajador" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Trabajado__id_ro__4316F928" Association="Self.FK__Trabajado__id_ro__4316F928">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Trabajador" EntitySet="Trabajador" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ProyectoFinca.Trabajador>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Menu Principal</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo trabajador", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Finca.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rol.Descripcion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Finca.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rol.Descripcion)
+        </td>
+        <td>
+            @Html.ActionLink("Modificar", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Mostrar", "Details", new { id=item.id }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>
